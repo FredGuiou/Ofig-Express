@@ -26,5 +26,5 @@ app.use(router);
 
 // on lance le serveur
 app.listen(PORT, () => {
-  console.log(`Listening on ${PORT}`);
+  console.log(`Listening on: http://localhost:${PORT}`);
 });
