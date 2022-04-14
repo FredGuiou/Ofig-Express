@@ -2,7 +2,7 @@
 const pg = require('pg');
 
 // 2. Créer un client
-const client = new pg.Client(process.env.PG_URL);
+const client = new pg.Client();
 
 // 3. Connecter le client
 client.connect();
