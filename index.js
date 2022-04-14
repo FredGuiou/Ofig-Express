@@ -12,6 +12,11 @@ const PORT = process.env.PORT || 5000;
 
 const app = express();
 
+//On dit à express d'utiliser le moteur e views ejs
+app.set("view engine", "ejs");
+//On donne le chemin des views à ejs
+app.set("views", `${__dirname}/app/views`);
+
 // servir les fichiers statiques qui sont dans "integration"
 app.use(express.static("integration"));
 
