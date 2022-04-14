@@ -1,5 +1,3 @@
-// const path = require("path");
-//On annule le path qui n'a d'utilité que pour renvoyer des fichiers "durs"
 //On require notre dataMapper dans une const (pensser au chemin ../ le cas échéant)
 const dataMapper = require('../dataMapper');
 
@@ -16,17 +14,26 @@ const mainController = {
       response.send("Il y a un problème");
     }
   },
-  // const filePath = path.resolve(__dirname + "/../../integration/accueil.html");
-  // response.sendFile(filePath);
-  //On annule l'envoi de file et on renvoie une vue.
-  // response.render("accueil.ejs");
 
   // méthode pour la page article
-  articlePage: (request, response) => {
-    // const filePath = path.resolve(__dirname + "/../../integration/article.html");
-    // response.sendFile(filePath);
-    //On annule l'envoi de file et on renvoie une vue.
-    response.render("article.ejs");
+  articlePage: async (request, response, next) => {
+    //On crée une constante article qui appelle le paramètre de la route (ici id) de l'objet
+    //On oublie pas de faire un parseInt pour "numériser" le résultat.
+    const articleId = parseInt(request.params.id, 10);
+    //On lance la methode dans laquelle on fait appel à getOneFigurine.
+    try {
+      const article = await dataMapper.getOneFigurine(articleId);
+      //Si il trouve l'article alors il rend la vue de l'article correspondant
+      if (article) {
+        response.render('article', { article });
+      } else {
+        //Sinon il renvoie le message "la figurine n'existe pas"
+        response.send("Cette figurine n'existe pas");
+      }
+    } catch (error) {
+      //Si le try ne fonctionne pas alors il affiche "Il y a un problème"
+      response.send("Il y a un problème");
+    }
   }
 
 };
